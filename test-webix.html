@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+      <!-- <link rel="stylesheet" href="../../codebase/webix.css" type="text/css" charset="utf-8"> -->
+      <link rel="stylesheet" href="webix.css">
+      <script src="webix.js"></script>
+
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&family=Roboto&display=swap"
+            rel="stylesheet">
+</head>
+
+<body>
+      <script type="text/javascript" charset="utf-8">
+
+            webix.ready(function ()
+            {
+                  console.log("WEBIX WORKING!")
+
+                  webix.ui({
+                        type: "line",
+                        rows: [
+                              {
+                                    view: "toolbar", id: "miBarraHerramientas", elements: [
+                                          { view: "button", value: "Guardar" },
+                                          { view: "button", value: "Eliminar" },
+                                          { view: "button", value: "Duplicar" }
+                                    ],
+                              },
+                              {
+                                    cols: [
+                                          {
+                                                view: "form", id: "miFormulario", elements: [
+                                                      {
+                                                            view: "text", name: "Titulo", placeholder: "Titulo", align: "center"
+                                                      }
+                                                ]
+                                          }
+                                    ]
+                              }]
+                  });
+
+                  // webix.ui({
+                  //       container: "cont-webix",
+                  //       type: "line",
+                  //       rows: [
+                  //             { template: "Row 1" },
+                  //       ]
+                  // });
+            });
+      </script>
+</body>
+
+</html>

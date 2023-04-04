@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+      <!-- <link rel="stylesheet" href="../../codebase/webix.css" type="text/css" charset="utf-8"> -->
+      <link rel="stylesheet" href="webix.css">
+      <script src="webix.js"></script>
+
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&family=Roboto&display=swap"
+            rel="stylesheet">
+</head>
+
+<body>
+      <script type="text/javascript" charset="utf-8">
+
+            webix.ready(function ()
+            {
+                  console.log("WEBIX WORKING!")
+
+                  webix.ui({
+                        type: "line",
+                        rows: [
+                              { cols: [{ template: "col1" }, { template: "col2" }] },
+                              { template: "Row 1" },
+                              { template: "Row2" }
+                        ]
+                  });
+
+                  // webix.ui({
+                  //       container: "cont-webix",
+                  //       type: "line",
+                  //       rows: [
+                  //             { template: "Row 1" },
+                  //       ]
+                  // });
+            });
+      </script>
+</body>
+
+</html>

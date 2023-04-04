@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+      <!-- <link rel="stylesheet" href="../../codebase/webix.css" type="text/css" charset="utf-8"> -->
+      <link rel="stylesheet" href="webix.css">
+      <script src="webix.js"></script>
+
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&family=Roboto&display=swap"
+            rel="stylesheet">
+</head>
+
+<body>
+      <script type="text/javascript" charset="utf-8">
+
+            var arrMovies = [
+                  { id: 1, title: "The Shawshank Redemption", year: 1994 },
+                  { id: 2, title: "The Godfather", year: 1972 },
+                  { id: 3, title: "The Godfather: Part II", year: 1974 },
+                  { id: 4, title: "The Good, the Bad and the Ugly", year: 1966 },
+                  { id: 5, title: "My Fair Lady", year: 1964 },
+                  { id: 6, title: "12 Angry Men", year: 1957 }
+            ];
+
+            function dameProxId()
+            {
+                  largoLista = $$("mylist").count();
+                  nuevoId = largoLista + 1;
+                  console.log("LARGO LISTA: " + largoLista);
+
+                  return nuevoId;
+            }
+            function guardarMovie()
+            {
+                  console.log("GUARDANDO MOVIE");
+
+                  tituloNuevo = $$("inputTitulo").getValue();
+                  yearNuevo = $$("inputYear").getValue();
+
+                  nuevoId = dameProxId();
+
+                  $$("mylist").add({ id: nuevoId, title: tituloNuevo, year: yearNuevo }, nuevoId - 1);
+            }
+            function deleteMovie()
+            {
+                  console.log("DELETE MOVIE");
+
+                  var id = $$("mylist").getSelectedId();
+                  $$("mylist").remove(id);
+
+            }
+
+            function init()
+            {
+                  $$("btnDeleteMovie").disable();
+                  $$("btnDuplicateMovie").disable();
+            }
+            function duplicateMovie()
+            {
+                  var itemSelected = $$("mylist").getSelectedItem();
+
+                  nuevoId = dameProxId();
+                  itemSelected.id = nuevoId;
+
+                  $$("mylist").add(itemSelected, (nuevoId - 1));
+            }
+
+            webix.ready(function ()
+            {
+                  console.log("WEBIX WORKING!")
+
+                  webix.ui({
+                        type: "line",
+                        rows: [
+                              {
+                                    view: "toolbar", id: "miBarraHerramientas", elements: [
+                                          { view: "button", id: "btnSaveMovie", value: "Guardar", click: guardarMovie },
+                                          { view: "button", id: "btnDeleteMovie", value: "Eliminar", click: deleteMovie },
+                                          { view: "button", id: "btnDuplicateMovie", value: "Duplicar", click: duplicateMovie }
+                                    ],
+                              },
+                              {
+                                    cols:
+                                          [
+                                                {
+                                                      rows: [
+                                                            {
+                                                                  view: "form", id: "miFormulario", elements: [
+                                                                        {
+                                                                              view: "text", id: "inputTitulo", name: "Titulo", placeholder: "Titulo", align: "center"
+                                                                        },
+                                                                        {
+                                                                              view: "text", id: "inputYear", name: "Año", placeholder: "Año", align: "center"
+                                                                        }
+                                                                  ],
+                                                            },
+                                                      ]
+                                                },
+                                                {
+                                                      cols: [
+                                                            {
+                                                                  view: "list",
+                                                                  id: "mylist",
+                                                                  template: "#id# | #title# - #year#",
+                                                                  select: true, //enables selection 
+                                                                  height: 400,
+                                                                  data: arrMovies,
+                                                                  on: {
+                                                                        onItemClick: function (id)
+                                                                        {
+                                                                              var itemSelected = $$("mylist").getIndexById(id);
+
+                                                                              console.log("ITEM SELECTED: " + JSON.stringify(itemSelected));
+
+                                                                              if (itemSelected != null)
+                                                                              {
+                                                                                    console.log("CLICK EN LISTA id=" + id);
+
+                                                                                    $$("btnDeleteMovie").enable();
+                                                                                    $$("btnDuplicateMovie").enable();
+                                                                              }
+                                                                        }
+                                                                  }
+
+                                                            }
+                                                      ]
+                                                }
+                                          ],
+
+                              }]
+                  });
+
+                  init();
+            });
+      </script>
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+      <!-- <link rel="stylesheet" href="../../codebase/webix.css" type="text/css" charset="utf-8"> -->
+      <link rel="stylesheet" href="webix.css">
+      <script src="webix.js"></script>
+
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&family=Roboto&display=swap"
+            rel="stylesheet">
+</head>
+
+<body>
+      <script type="text/javascript" charset="utf-8">
+
+            var arrMovies = [
+                  { id: 1, title: "The Shawshank Redemption", year: 1994 },
+                  { id: 2, title: "The Godfather", year: 1972 },
+                  { id: 3, title: "The Godfather: Part II", year: 1974 },
+                  { id: 4, title: "The Good, the Bad and the Ugly", year: 1966 },
+                  { id: 5, title: "My Fair Lady", year: 1964 },
+                  { id: 6, title: "12 Angry Men", year: 1957 }
+            ];
+
+            function guardarMovie()
+            {
+                  console.log("GUARDANDO MOVIE");
+                  $$("mylist").add({ title: "asdfjkalsd", year: 7878 }, 0);
+                  // arrMovies.push();
+            }
+            function deleteMovie()
+            {
+                  console.log("DELETE MOVIE");
+
+                  var id = $$("mylist").getSelectedId();
+                  $$("mylist").remove(id);
+
+                  // arrMovies.push({ id: 99, title: "asdfjkalsd", year: 7878 });
+            }
+            webix.ready(function ()
+            {
+                  console.log("WEBIX WORKING!")
+
+                  webix.ui({
+                        type: "line",
+                        rows: [
+                              {
+                                    view: "toolbar", id: "miBarraHerramientas", elements: [
+                                          { view: "button", value: "Guardar", click: guardarMovie },
+                                          { view: "button", value: "Eliminar", click: deleteMovie },
+                                          { view: "button", value: "Duplicar" }
+                                    ],
+                              },
+                              {
+                                    cols:
+                                          [
+                                                {
+                                                      rows: [
+                                                            {
+                                                                  view: "form", id: "miFormulario", elements: [
+                                                                        {
+                                                                              view: "text", name: "Titulo", placeholder: "Titulo", align: "center"
+                                                                        },
+                                                                        {
+                                                                              view: "text", name: "Año", placeholder: "Año", align: "center"
+                                                                        }
+                                                                  ],
+                                                            },
+                                                      ]
+                                                },
+                                                {
+                                                      cols: [
+                                                            {
+                                                                  view: "list",
+                                                                  id: "mylist",
+                                                                  template: "#title# - #year#",
+                                                                  select: true, //enables selection 
+                                                                  height: 400,
+                                                                  data: arrMovies,
+                                                                  on: {
+                                                                        onItemClick: function (id)
+                                                                        {
+                                                                              alert("CLICK EN LISTA id=" + id);
+                                                                        }
+                                                                  }
+
+                                                            }
+                                                      ]
+                                                }
+                                          ],
+
+                              }]
+                  });
+            });
+      </script>
+</body>
+
+</html>
