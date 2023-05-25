@@ -1,0 +1,28 @@
+    function debugComboOptions(idCombo)
+    {
+        var arrOptions = [];
+
+        var combo = $$(idCombo);
+
+        if(combo != null)
+        {
+            var popup = combo.getPopup();
+
+            if(popup != null)
+            {
+                if(list != null)
+                {
+                    var list = popup.getBody();
+
+                    if(list != null)
+                    {
+                        var data = list.data;
+                        arrOptions = data.order;
+
+                        console.log("COMBO $$(" + idCombo + ") ARR OPTIONS: " + arrOptions.length + " -> " + arrOptions);
+                    }
+                }
+            }
+
+        }
+    }

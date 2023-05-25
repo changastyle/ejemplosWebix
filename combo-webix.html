@@ -51,6 +51,20 @@
                   $$("mylist").remove(id);
 
             }
+            function getOptions()
+            {
+                  var arrOptions = [];
+
+                  var combo = $$("combo-nico");
+
+                  var popup = combo.getPopup();
+                  var list = popup.getBody();
+                  var data = list.data;
+
+                  arrOptions = data.order;
+
+                  console.log("ARR OPTIONS: " + arrOptions.length + " -> " + arrOptions);
+            }
 
             function init()
             {
@@ -78,56 +92,70 @@
                                     view: "toolbar", id: "miBarraHerramientas", elements: [
                                           { view: "button", id: "btnSaveMovie", value: "Guardar", click: guardarMovie },
                                           { view: "button", id: "btnDeleteMovie", value: "Eliminar", click: deleteMovie },
+                                          { view: "button", id: "btnDebug", value: "Debug", click: getOptions },
                                           { view: "button", id: "btnDuplicateMovie", value: "Duplicar", click: duplicateMovie }
                                     ],
                               },
                               {
-                                    cols:
+                                    rows:
                                           [
                                                 {
-                                                      rows: [
-                                                            {
-                                                                  view: "form", id: "miFormulario", elements: [
-                                                                        {
-                                                                              view: "text", id: "inputTitulo", name: "Titulo", placeholder: "Titulo", align: "center"
-                                                                        },
-                                                                        {
-                                                                              view: "text", id: "inputYear", name: "Año", placeholder: "Año", align: "center"
-                                                                        }
-                                                                  ],
-                                                            },
-                                                      ]
+                                                      cols:
+                                                            [
+                                                                  {
+                                                                        rows: [
+                                                                              {
+                                                                                    view: "form", id: "miFormulario", elements: [
+                                                                                          {
+                                                                                                view: "text", id: "inputTitulo", name: "Titulo", placeholder: "Titulo", align: "center"
+                                                                                          },
+                                                                                          {
+                                                                                                view: "text", id: "inputYear", name: "Año", placeholder: "Año", align: "center"
+                                                                                          }
+                                                                                    ],
+                                                                              },
+                                                                        ]
+                                                                  },
+                                                                  {
+                                                                        cols: [
+                                                                              {
+                                                                                    view: "list",
+                                                                                    id: "mylist",
+                                                                                    template: "#id# | #title# - #year#",
+                                                                                    select: true, //enables selection 
+                                                                                    height: 400,
+                                                                                    data: arrMovies,
+                                                                                    on: {
+                                                                                          onItemClick: function (id)
+                                                                                          {
+                                                                                                var itemSelected = $$("mylist").getIndexById(id);
+
+                                                                                                console.log("ITEM SELECTED: " + JSON.stringify(itemSelected));
+
+                                                                                                if (itemSelected != null)
+                                                                                                {
+                                                                                                      console.log("CLICK EN LISTA id=" + id);
+
+                                                                                                      $$("btnDeleteMovie").enable();
+                                                                                                      $$("btnDuplicateMovie").enable();
+                                                                                                }
+                                                                                          }
+                                                                                    }
+
+                                                                              }
+                                                                        ]
+                                                                  }
+                                                            ]
                                                 },
                                                 {
-                                                      cols: [
-                                                            {
-                                                                  view: "list",
-                                                                  id: "mylist",
-                                                                  template: "#id# | #title# - #year#",
-                                                                  select: true, //enables selection 
-                                                                  height: 400,
-                                                                  data: arrMovies,
-                                                                  on: {
-                                                                        onItemClick: function (id)
-                                                                        {
-                                                                              var itemSelected = $$("mylist").getIndexById(id);
-
-                                                                              console.log("ITEM SELECTED: " + JSON.stringify(itemSelected));
-
-                                                                              if (itemSelected != null)
-                                                                              {
-                                                                                    console.log("CLICK EN LISTA id=" + id);
-
-                                                                                    $$("btnDeleteMovie").enable();
-                                                                                    $$("btnDuplicateMovie").enable();
-                                                                              }
-                                                                        }
-                                                                  }
-
-                                                            }
-                                                      ]
-                                                }
+                                                      view: "combo",
+                                                      id: "combo-nico",
+                                                      label: "Combo Box Nico",
+                                                      value: "One",
+                                                      options: ["One", "Two", "Three"]
+                                                },
                                           ],
+
 
                               }]
                   });

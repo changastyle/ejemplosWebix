@@ -1,0 +1,36 @@
+ view: "combo",
+                            id: "pricing-criteria-combo",
+                            label: _("pricing.pricingRulesV2.pricingPer") + " *",
+                            options: [],
+                            name: "name",
+                            required: true,
+                            invalidMessage:  _("error.pricing.invalidPricing"),
+                            validate: function(value) {
+                                console.log("VALIDANDO:" + value + "|");
+                                if (value != null && value.trim().length > 0)
+                                {
+                                    return true;
+                                }
+                                else
+                                {
+                                    return false;
+                                }
+                                // return webix.rules.isNotEmpty(value);
+                            },
+                            on: {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                // alert(_("error.pricing.pricingCriteriaRequired"));

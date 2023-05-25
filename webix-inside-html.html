@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+      <!-- <link rel="stylesheet" href="../../codebase/webix.css" type="text/css" charset="utf-8"> -->
+      <link rel="stylesheet" href="./webix.css">
+      <link rel="stylesheet" href="./comun.css">
+      <script src="./webix.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+      <!-- jQuery library -->
+      <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+
+      <!-- Popper JS -->
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+      <!-- Latest compiled JavaScript -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</head>
+
+<body class="body" ng-app="app" ng-controller="ctl" ng-init="init()">
+
+      <div class="cont-webix  col-12 p-3 flex" id="cont-nico">
+
+            <div class="col-6 contenido p-3">
+                  <h3>FORM HTML + ANGULAR JS</h3>
+
+                  <div class="form-group">
+                        <label>Movie name:</label>
+                        <input class="form-control col-12" placeholder="Harry Potter" ng-model="title">
+                  </div>
+                  <div class="form-group">
+                        <label>Year of Movie:</label>
+                        <input class="form-control col-12" placeholder="1999" ng-model="year">
+                  </div>
+                  <div class="form-group">
+                        <label for="votes">
+                              Votes
+                              <!-- {{maxEstrellas}} -->
+                        </label>
+
+                        <span id="star-1" data-estrella="1" class="estellas fa fa-star pointer"
+                              ng-click="touchStar($event)"></span>
+                        <span id="star-2" data-estrella="2" class="estellas fa fa-star pointer"
+                              ng-click="touchStar($event)"></span>
+                        <span id="star-3" data-estrella="3" class="estellas fa fa-star pointer"
+                              ng-click="touchStar($event)"></span>
+                        <span id="star-4" data-estrella="4" class="estellas fa fa-star pointer"
+                              ng-click="touchStar($event)"></span>
+                        <span id="star-5" data-estrella="5" class="estellas fa fa-star pointer"
+                              ng-click="touchStar($event)"></span>
+                  </div>
+
+
+                  <button class="btn btn-success col-12 mb-3" ng-click="addMovie()">
+                        Save
+                  </button>
+
+            </div>
+            <div class="col-6 ">
+                  <div class="contenido col-12 p-3">
+
+                        <h3>WEBIX LIST</h3>
+
+                        <div id="list_box">
+                        </div>
+                  </div>
+            </div>
+
+
+      </div>
+      <script type="text/javascript" charset="utf-8">
+            app = angular.module('app', []);
+            app.controller('ctl', function ($scope)
+            {
+
+                  $scope.arrMovies = [
+                        { "id": 1, "title": "Movie 1", "year": "1994", "votes": "5" },
+                        { "id": 2, "title": "Movie 2", "year": "1994", "votes": "4" },
+                        { "id": 3, "title": "Movie 3", "year": "1994", "votes": "3" }
+                  ];
+
+                  $scope.touchStar = function (evento)
+                  {
+                        id = evento.target.id;
+                        $scope.maxEstrellas = $("#" + id).data("estrella");
+                        console.log("MARCANDO ESTRELLA: " + id + " -> " + $scope.maxEstrellas);
+
+                        $(".estellas").each(function (index, element)
+                        {
+                              $(element).removeClass("star-checked");
+                        });
+
+
+                        for (i = 1; i <= $scope.maxEstrellas; i++)
+                        {
+                              $("#star-" + i).addClass("star-checked");
+                        }
+                  }
+                  $scope.addMovie = function ()
+                  {
+                        console.log("|----- ADD MOVIE:" + $scope.arrMovies.length + " -----|");
+                        for (i = 0; i < $scope.arrMovies.length; i++)
+                        {
+                              movieLoop = $scope.arrMovies[i];
+                              console.log(i + " - " + JSON.stringify(movieLoop));
+                        }
+
+                        max = $scope.arrMovies.length + 1;
+
+                        var newMovie = { "id": max, "title": $scope.title, "year": $scope.year, "votes": $scope.maxEstrellas };
+                        $scope.arrMovies.push(newMovie)
+
+                        // WEBIX REFRESH:
+                        $$("list-nico").define({
+                              data: $scope.arrMovies
+                        });
+                  }
+                  webix.ready(function ()
+                  {
+
+                        webix.ui({
+                              id: "list-nico",
+                              view: "list",
+                              container: "list_box",
+                              height: 600,
+                              template: "<div class='item-movie-list flex'><div class='mark pr-3'>#votes#<span class='votes fa fa-star'></span></div> <div class='name-movie flex-center pr-3'>#title# (#year#)</div></div>",
+                              type: {
+                                    height: 62
+                              },
+                              select: true,
+                              data: $scope.arrMovies
+                        });
+                  });
+            });
+      </script>
+</body>
+
+</html>
+
+<style>
+      .body {
+            background-color: #e3e3e3;
+      }
+
+      .contenido {
+            background-color: white;
+            border-radius: 20px;
+
+      }
+
+      .bsr {
+            border: solid 1px red;
+
+      }
+
+      .mark {
+            margin-top: 15px;
+            background-color: red;
+            color: white;
+            font-weight: bold;
+            padding-left: 15px;
+      }
+
+      .name-movie {
+            background-color: blue;
+            margin-top: 15px;
+            color: white;
+            font-weight: bold;
+            padding-left: 15px;
+      }
+
+      .votes {
+            padding: 4px;
+      }
+
+      .star-checked {
+            color: orange;
+      }
+</style>
